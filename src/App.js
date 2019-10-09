@@ -1,6 +1,29 @@
 import React from "react";
 
-class LegacyReact extends React.Component {
+function RepoList(props) {
+  const { repos = [] } = props;
+
+  if (repos.length === 0) return <p>No results</p>;
+  return (
+    <div>
+      <h2>Repos</h2>
+      <div>
+        {repos.map(x => {
+          return (
+            <div key={x.id} style={{ margin: 8, border: "1px solid" }}>
+              <div>Name: {x.full_name}</div>
+              <div>Description: {x.description}</div>
+              <div>Stars: {x.stargazers_count}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+RepoList.displayName = "RepoList";
+
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { error: null, loading: false, repos: [], username: "" };
@@ -20,24 +43,7 @@ class LegacyReact extends React.Component {
   renderRepos = () => {
     const { state } = this;
     const { repos = [] } = state;
-    if (repos.length === 0) return <p>No results</p>;
-
-    return (
-      <div>
-        <h2>Repos</h2>
-        <div>
-          {repos.map(x => {
-            return (
-              <div key={x.id} style={{ margin: 8, border: "1px solid" }}>
-                <div>Name: {x.full_name}</div>
-                <div>Description: {x.description}</div>
-                <div>Stars: {x.stargazers_count}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
+    return <RepoList repos={repos} />;
   };
   render() {
     const { state } = this;
@@ -61,4 +67,4 @@ class LegacyReact extends React.Component {
   }
 }
 
-export default LegacyReact;
+export default App;
