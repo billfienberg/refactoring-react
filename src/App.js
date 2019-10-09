@@ -40,14 +40,10 @@ class App extends React.Component {
     const { value } = e.target;
     this.setState({ username: value });
   };
-  renderRepos = () => {
-    const { state } = this;
-    const { repos = [] } = state;
-    return <RepoList repos={repos} />;
-  };
+
   render() {
     const { state } = this;
-    const { loading, error } = state;
+    const { loading, error, repos = [] } = state;
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error</p>;
 
@@ -61,7 +57,7 @@ class App extends React.Component {
         <button type="button" onClick={this.handleClick}>
           Fetch GitHub User
         </button>
-        {this.renderRepos()}
+        <RepoList repos={repos} />
       </div>
     );
   }
